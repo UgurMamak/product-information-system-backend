@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromForm]RegisterDto registerDto)
         {
-            var isThereUser = _authService.UserExists(registerDto.Email);
+            var isThereUser = await _authService.UserExists(registerDto.Email);
             if (!isThereUser.Success)
             {
                 return BadRequest(isThereUser.Message);
@@ -37,8 +37,8 @@ namespace WebApi.Controllers
             {
                 imageName = "profileImage.jpg";
             }
-            var registerResult = _authService.Register(registerDto, imageName);
-            var result = _authService.CreateAccessToken(registerResult.Data);//registerResult'ın döndüğü Data(User) bilgisini token üretmek için parametre olarak verdim.
+            var registerResult =await _authService.Register(registerDto, imageName);
+            var result =await _authService.CreateAccessToken(registerResult.Data);//registerResult'ın döndüğü Data(User) bilgisini token üretmek için parametre olarak verdim.
             if (registerDto.Image != null)
             {
                 if (registerDto.Image.Length > 0)
@@ -58,14 +58,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult Login(LoginDto LoginDto)
+        public async Task<ActionResult> Login(LoginDto LoginDto)
         {
-            var login = _authService.Login(LoginDto);
+            var login =await _authService.Login(LoginDto);
             if(!login.Success)
             {
                 return BadRequest(login.Message);
             }
-            var token = _authService.CreateAccessToken(login.Data);
+            var token =await _authService.CreateAccessToken(login.Data);
             if (token.Success)
             {
                 return Ok(token.Data);

@@ -53,6 +53,13 @@ namespace WebApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserDal,EfUserDal > ();
 
+
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryDal, EfCategoryDal>();
+
+            services.AddScoped<IProductTypeService, ProductTypeService>();
+            services.AddScoped<IProductTypeDal, EfProductTypeDal>();
+
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenHelper, JwtHelper>();
 

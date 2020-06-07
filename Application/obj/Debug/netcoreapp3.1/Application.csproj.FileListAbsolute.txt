@@ -8,5 +8,5 @@ C:\Users\Uğur Mamak\Desktop\Product_Information_Project\product-information-bac
 C:\Users\Uğur Mamak\Desktop\Product_Information_Project\product-information-backend\Application\bin\Debug\netcoreapp3.1\Application.runtimeconfig.json
 C:\Users\Uğur Mamak\Desktop\Product_Information_Project\product-information-backend\Application\bin\Debug\netcoreapp3.1\Application.runtimeconfig.dev.json
 C:\Users\Uğur Mamak\Desktop\Product_Information_Project\product-information-backend\Application\obj\Debug\netcoreapp3.1\Application.genruntimeconfig.cache
-C:\Users\Uğur Mamak\Desktop\Product_Information_Project\product-information-backend\Application\obj\Debug\netcoreapp3.1\Application.csproj.CoreCompileInputs.cache
 C:\Users\Uğur Mamak\Desktop\Product_Information_Project\product-information-backend\Application\obj\Debug\netcoreapp3.1\Application.csprojAssemblyReference.cache
+C:\Users\Uğur Mamak\Desktop\Product_Information_Project\product-information-backend\Application\obj\Debug\netcoreapp3.1\Application.csproj.CoreCompileInputs.cache

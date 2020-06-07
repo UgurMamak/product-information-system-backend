@@ -247,6 +247,9 @@ namespace Application.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProductTypeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -260,6 +263,10 @@ namespace Application.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductTypeId")
+                        .IsUnique()
+                        .HasFilter("[ProductTypeId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -343,6 +350,37 @@ namespace Application.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ProductPoint");
+                });
+
+            modelBuilder.Entity("Application.Entities.Entity.ProductType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProductTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductType");
                 });
 
             modelBuilder.Entity("Application.Entities.Entity.User", b =>
@@ -447,6 +485,11 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Application.Entities.Entity.Product", b =>
                 {
+                    b.HasOne("Application.Entities.Entity.ProductType", "ProductType")
+                        .WithOne("Product")
+                        .HasForeignKey("Application.Entities.Entity.Product", "ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Application.Entities.Entity.User", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId")

@@ -7,6 +7,7 @@ using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Bussiness.Concrete
 {
@@ -19,20 +20,20 @@ namespace Application.Bussiness.Concrete
             _userService = userService;
             _tokenHelper = tokenHelper;
         }
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
         {
             /* Kullanıcı kayıt olduktan veya login olduktan token yaratılıcak. ve kullanıcı işlemlerini bu token vasıtasıyka gerçekleştirecek.
               * Aşağıdaki kodlar başarılı olma durumunda olabilecek işlemler başarısız işlem olma durumunda da burada eklemeler yapmalıyız
             */
-            var claims = _userService.GetClaims(user);//user rollerini döndürecek (Kullanıcının sahip olduğu rolleri dönecek.)           
+            var claims =await _userService.GetClaims(user);//user rollerini döndürecek (Kullanıcının sahip olduğu rolleri dönecek.)           
             var accessToken = _tokenHelper.CreateToken(user, claims);//user bilgisi ve roll bilgisini token oluşturacak operasyona parametre olarak veriyoruz.
             accessToken.Role = claims;
-            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            return  new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
 
-        public IDataResult<User> Login(LoginDto LoginDto)
+        public async Task<IDataResult<User>> Login(LoginDto LoginDto)
         {
-            var isThereUser = _userService.GetByMail(LoginDto.Email);
+            var isThereUser =await _userService.GetByMail(LoginDto.Email);
             if(isThereUser==null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
@@ -46,7 +47,7 @@ namespace Application.Bussiness.Concrete
             return new SuccessDataResult<User>(isThereUser, Messages.SuccessfulLogin);
         }
 
-        public IDataResult<User> Register(RegisterDto RegisterDto, string imgName)
+        public async Task<IDataResult<User>> Register(RegisterDto RegisterDto, string imgName)
         {
             byte[] passwordHash, passwordSalt; //işlem bitince bunlar oluşacak
 
@@ -64,7 +65,7 @@ namespace Application.Bussiness.Concrete
                 ImageName = imgName,
                 RoleId=Convert.ToInt32(RegisterDto.Role)
             };
-            _userService.Add(user);
+             _userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
 
             /*
@@ -76,9 +77,9 @@ namespace Application.Bussiness.Concrete
 
         }
 
-        public IResult UserExists(string email)
+        public async Task<IResult> UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null)
+            if (await _userService.GetByMail(email) != null)
             {
                 return new ErrorResult(Messages.UserAlreadyExists);//eğer kullanıcı varsa ErrorDataResult döndüreceğiz.
             }

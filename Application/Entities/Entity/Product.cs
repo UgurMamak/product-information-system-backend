@@ -16,10 +16,13 @@ namespace Application.Entities.Entity
         public string Title { get; set; }
 
         public string UserId { get; set; }
+        public string ProductTypeId { get; set; }
         public User User { get; set; }
         public List<Image> Images { get; set; }
         public List<Comment> Comments { get; set; }
         public List<ProductCategory> ProductCategories { get; set; }
         public List<LikeProduct> LikeProducts { get; set; }
+
+        public ProductType ProductType { get; set; }
     }
 }

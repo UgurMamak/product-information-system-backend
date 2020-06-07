@@ -11,6 +11,12 @@ namespace Application.Bussiness
         public static string CategoryUpdated = "Kategori başarıyla güncellendi";
         public static string CategoryAlreadyExists = "Bu kategori zaten mevcut";
 
+
+        public static string ProductTypeAdded = "Ürün tipi başarıyla eklendi";
+        public static string ProductTypeDeleted = "Ürün tipi başarıyla silindi";
+        public static string ProductTypeUpdated = "Ürün tipi başarıyla güncellendi";
+        public static string ProductTypeAlreadyExists = "Ürün tipi zaten mevcut";
+
         public static string PostAdded = "Post başarıyla eklendi";
         public static string PostDeleted = "Post başarıyla silindi";
         public static string PostUpdated = "Post başarıyla güncellendi";

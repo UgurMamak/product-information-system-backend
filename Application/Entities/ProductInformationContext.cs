@@ -3,17 +3,21 @@ using Application.Entities.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.Text;
 
 namespace Application.Entities
 {
     public class ProductInformationContext : DbContext
-    {       /*
+    {
+        public ProductInformationContext()
+        {
+        }
+
         public ProductInformationContext(DbContextOptions<ProductInformationContext> options) :
         base(options)
         {
-        }*/
+        }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }

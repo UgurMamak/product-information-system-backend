@@ -20,6 +20,13 @@ namespace Application.Entities.Configurations
                 .WithMany(x => x.Products)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x=>x.ProductType)
+                .WithOne(x=>x.Product)
+                .HasForeignKey<Product>(x=>x.ProductTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
+           
+
         }
     }
 }
