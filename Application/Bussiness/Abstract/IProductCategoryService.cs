@@ -1,6 +1,5 @@
 ﻿using Application.Core.Utilities.Results;
-using Application.Entities.Dtos.Product;
-using Application.Entities.Entity;
+using Application.Entities.Dtos.ProductCategory;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Bussiness.Abstract
 {
-   public interface IProductService
+    public interface IProductCategoryService
     {
-       Task<IDataResult<Product>> Add(ProductCreateDto postCreateDto);
+       Task<IResult> Add(ProductCategoryCreateDto productCategoryCreateDto);
     }
 }
-

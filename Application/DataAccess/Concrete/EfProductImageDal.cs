@@ -5,11 +5,10 @@ using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.DataAccess.Concrete
 {
-    public class EfProductCategory:EfEntityRepositoryBase<ProductCategory,ProductInformationContext>,IProductCategoryDal
+    public class EfProductImageDal:EfEntityRepositoryBase<Image,ProductInformationContext>,IProductImageDal
     {
     }
 }

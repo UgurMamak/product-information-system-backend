@@ -1,5 +1,4 @@
 ﻿using Application.Core.Utilities.Results;
-using Application.Entities.Dtos.Product;
 using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
@@ -8,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Bussiness.Abstract
 {
-   public interface IProductService
+    public interface IProductImageService
     {
-       Task<IDataResult<Product>> Add(ProductCreateDto postCreateDto);
+        Task<IResult> Add(List<string>images,string productId);
     }
 }
-

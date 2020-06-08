@@ -17,9 +17,9 @@ namespace Application.Bussiness
         public static string ProductTypeUpdated = "Ürün tipi başarıyla güncellendi";
         public static string ProductTypeAlreadyExists = "Ürün tipi zaten mevcut";
 
-        public static string PostAdded = "Post başarıyla eklendi";
-        public static string PostDeleted = "Post başarıyla silindi";
-        public static string PostUpdated = "Post başarıyla güncellendi";
+        public static string ProductAdded = "Post başarıyla eklendi";
+        public static string ProductDeleted = "Post başarıyla silindi";
+        public static string ProductUpdated = "Post başarıyla güncellendi";
 
         public static string CommentAdded = "Yorum başarıyla eklendi";
         public static string CommentDeleted = "Yorum başarıyla silindi";

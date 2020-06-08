@@ -20,7 +20,7 @@ namespace WebApi.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpPost("add")]//++++
+        [HttpPost("add")]
         public async Task<IActionResult> Add(Category category)
         {
             var categoryExists = await _categoryService.CategoryExists(category.CategoryName);

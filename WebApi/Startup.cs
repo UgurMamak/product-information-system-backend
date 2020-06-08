@@ -57,8 +57,20 @@ namespace WebApi
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryDal, EfCategoryDal>();
 
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<ICommentDal, EfCommentDal>();
+
             services.AddScoped<IProductTypeService, ProductTypeService>();
             services.AddScoped<IProductTypeDal, EfProductTypeDal>();
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductDal, EfProductDal>();
+
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IProductCategoryDal, EfProductCategoryDal>();
+
+            services.AddScoped<IProductImageService, ProductImageService>();
+            services.AddScoped<IProductImageDal, EfProductImageDal>();
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenHelper, JwtHelper>();

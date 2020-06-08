@@ -21,11 +21,15 @@ namespace Application.Entities.Configurations
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            /*
             builder.HasOne(x=>x.ProductType)
                 .WithOne(x=>x.Product)
                 .HasForeignKey<Product>(x=>x.ProductTypeId)
+                .OnDelete(DeleteBehavior.Cascade);*/
+            builder.HasOne(x=>x.ProductType)
+                .WithMany()
+                .HasForeignKey(x=>x.ProductTypeId)
                 .OnDelete(DeleteBehavior.Cascade);
-           
 
         }
     }
