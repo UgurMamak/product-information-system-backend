@@ -15,7 +15,7 @@ namespace Application.Bussiness.Concrete
     {
         private IProductDal _productDal;
         private IProductCategoryService _productCategoryService;
-        public ProductService(IProductDal productDal,IProductCategoryService productCategoryService)
+        public ProductService(IProductDal productDal, IProductCategoryService productCategoryService)
         {
             _productDal = productDal;
             _productCategoryService = productCategoryService;
@@ -24,21 +24,24 @@ namespace Application.Bussiness.Concrete
         {
             var product = new Product
             {
-                ProductName=productCreateDto.ProductName,
-                ProductTypeId=productCreateDto.ProductTypeId,
+                ProductName = productCreateDto.ProductName,
+                ProductTypeId = productCreateDto.ProductTypeId,
                 Title = productCreateDto.Title,
-                Content = productCreateDto.Content,            
+                Content = productCreateDto.Content,
                 UserId = productCreateDto.UserId,
                 Created = DateTime.Now
             };
-             await _productDal.Add(product);
-           // var postSave = new SuccessDataResult<Product>(product, Messages.UserRegistered);
-            var entity = new SuccessDataResult<Product>(product);
-            foreach (var item in productCreateDto.Categories)
+            await _productDal.Add(product);
+            // var postSave = new SuccessDataResult<Product>(product, Messages.UserRegistered);
+            if (productCreateDto.Categories != null)
             {
-               await _productCategoryService.Add(
-                    new ProductCategoryCreateDto { ProductId=entity.Data.Id,CategoryId=item.CategoryId}
-                    );
+                var entity = new SuccessDataResult<Product>(product);
+                foreach (var item in productCreateDto.Categories)
+                {
+                    await _productCategoryService.Add(
+                         new ProductCategoryCreateDto { ProductId = entity.Data.Id, CategoryId = item.CategoryId }
+                         );
+                }
             }
             return new SuccessDataResult<Product>(product, Messages.ProductAdded);
         }
