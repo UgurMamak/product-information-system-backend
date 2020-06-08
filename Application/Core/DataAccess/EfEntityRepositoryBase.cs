@@ -15,7 +15,8 @@ namespace Application.Core.DataAccess
      where TEntity : class, IEntity, new()
      where TContext : DbContext, new()
     {
-        public async void Add(TEntity entity)
+
+        public async Task Add(TEntity entity)
         {
             using (var context = new TContext())
             {
@@ -24,7 +25,7 @@ namespace Application.Core.DataAccess
                await context.SaveChangesAsync();
             }
         }
-        public async void Delete(TEntity entity)
+        public async Task Delete(TEntity entity)
         {
             using (var context = new TContext())
             {
@@ -33,12 +34,12 @@ namespace Application.Core.DataAccess
                await context.SaveChangesAsync();
             }
         }
-        public async void DeleteById(Expression<Func<TEntity, bool>> filter = null)
+        public async Task DeleteById(Expression<Func<TEntity, bool>> filter = null)
         {
             //gelen sorrguya göre silme işlemi
             using (var context = new TContext())
             {
-                var entity =await context.Set<TEntity>().Where(filter).ToListAsync();
+                var entity =await context.Set<TEntity>().Where(filter).AsNoTracking().ToListAsync();
                 foreach (var item in entity)
                 {
                     context.Set<TEntity>().Remove(item);
@@ -51,7 +52,7 @@ namespace Application.Core.DataAccess
             //tek satır veri çekmek için
             using (var context = new TContext())
             {
-                return await context.Set<TEntity>().SingleOrDefaultAsync(filter);
+                return await context.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(filter);
             }
         }
 
@@ -61,12 +62,12 @@ namespace Application.Core.DataAccess
             using (var context = new TContext())
             {
                 return  filter == null
-                    ? await context.Set<TEntity>().ToListAsync()
-                    : await context.Set<TEntity>().Where(filter).ToListAsync();
+                    ? await context.Set<TEntity>().AsNoTracking().ToListAsync()
+                    : await context.Set<TEntity>().AsNoTracking().Where(filter).ToListAsync();
             }
         }
 
-        public async void Update(TEntity entity)
+        public async Task Update(TEntity entity)
         {
             using (var context = new TContext())
             {

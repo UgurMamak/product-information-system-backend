@@ -65,7 +65,7 @@ namespace Application.Bussiness.Concrete
                 ImageName = imgName,
                 RoleId=Convert.ToInt32(RegisterDto.Role)
             };
-             _userService.Add(user);
+             await _userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
 
             /*

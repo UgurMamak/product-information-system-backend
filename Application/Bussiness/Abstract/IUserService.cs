@@ -12,11 +12,12 @@ namespace Application.Bussiness.Abstract
     public interface IUserService
     {
         Task<List<OperationClaim>> GetClaims(User user);
-        void Add(User user);
+        Task Add(User user);
         Task<User> GetByMail(string email);
         Task<IDataResult<IList<UserListDto>>> GetById(string userId);
-        Task<IDataResult<User>> Update(UserUpdateDto userUpdateDto);
         Task<IDataResult<IList<UserGetAllDto>>> UserGetAll();
+        Task<IDataResult<User>> Update(UserUpdateDto userUpdateDto);
+      
 
     }
 }

@@ -14,5 +14,6 @@ namespace Application.DataAccess.Abstract
         Task<List<OperationClaim>> GetClaims(User user);
 
         Task<IList<UserGetAllDto>> GetAllUser();
+       Task UserUpdate(UserUpdateDto userUpdateDto);
     }
 }

@@ -7,11 +7,11 @@ using Application.Entities.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Linq;
+using Application.Core.Utilities.Security.Hashing;
 
 namespace Application.DataAccess.Concrete
 {
@@ -23,40 +23,52 @@ namespace Application.DataAccess.Concrete
             {
                 var entity = context.Users.Where(u => u.Id == user.Id)
                     .Join(context.OperationClaims, u => u.RoleId, o => o.Id, (u, o) => new OperationClaim { Id = o.Id, RoleName = o.RoleName });
-                return await entity.ToListAsync();
+                return await entity.AsNoTracking().ToListAsync();
             }
         }
-
-
-
-        public List<UserGetAllDto> GetAllUser()
+        public async Task<IList<UserGetAllDto>> GetAllUser()
         {
             using (var context = new ProductInformationContext())
             {
-               
-                   
-                var entity = context.Users.Include(u => u.OperationClaim).Where(w=>w.Id)
-
-                //var entity = context.UserOperationClaims.Include(u => u.User).Include(o => o.OperationClaim)
-
+                var entity =await context.Users.Include(u => u.OperationClaim)
                     .Select(se => new UserGetAllDto
                     {
+                        Id = se.Id,
+                        Email = se.Email,
+                        FirstName = se.FirstName,
+                        LastName = se.LastName,
+                        Role = se.OperationClaim.RoleName
 
-                        Id = se.UserId,
-                        FirstName = se.User.FirstName,
-                        LastName = se.User.LastName,
-                        Role = se.OperationClaim.Name,
-                        Email = se.User.Email
-
-                    })
-                    .ToList();
+                    }).AsNoTracking().ToListAsync();
                 return entity;
             }
         }
 
-        Task<IList<UserGetAllDto>> IUserDal.GetAllUser()
+        public async Task UserUpdate(UserUpdateDto userUpdateDto)
         {
-            throw new NotImplementedException();
+            using (var context = new ProductInformationContext())
+            {
+                var update =await context.Users.SingleOrDefaultAsync(w => w.Id == userUpdateDto.Id);
+
+                if (userUpdateDto.FirstName != null) update.FirstName = userUpdateDto.FirstName;
+
+                if (userUpdateDto.LastName != null) update.LastName = userUpdateDto.LastName;
+
+                if (userUpdateDto.Image != null) update.ImageName = userUpdateDto.ImageName;
+
+                if (userUpdateDto.Email != null) update.Email = userUpdateDto.Email;
+
+                if (userUpdateDto.password != null)
+                {
+                    byte[] passwordHash, passwordSalt; //işlem bitince bunlar oluşacak
+                    HashingHelper.CreatePasswordHash(userUpdateDto.password, out passwordHash, out passwordSalt);
+                    update.PasswordHash = passwordHash;
+                    update.PasswordSalt = passwordSalt;
+                }
+                update.Updated = DateTime.Now;
+               await context.SaveChangesAsync();
+            }
+        
         }
     }
 }

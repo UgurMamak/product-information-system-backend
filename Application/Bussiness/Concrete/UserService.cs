@@ -21,9 +21,9 @@ namespace Application.Bussiness.Concrete
             _userDal = userDal;
         }
 
-        public void Add(User user)
+        public async Task Add(User user)
         {
-            _userDal.Add(user);
+           await _userDal.Add(user);
         }
 
         public async Task<User> GetByMail(string email)
@@ -35,12 +35,7 @@ namespace Application.Bussiness.Concrete
         {
             return await _userDal.GetClaims(user);
         }
-
-        public Task<IDataResult<User>> Update(UserUpdateDto userUpdateDto)
-        {
-            throw new NotImplementedException();
-        }
-
+      
         public async Task<IDataResult<IList<UserGetAllDto>>> UserGetAll()
         {          
             return new SuccessDataResult<IList<UserGetAllDto>>(await _userDal.GetAllUser());
@@ -57,6 +52,12 @@ namespace Application.Bussiness.Concrete
                 LastName = se.LastName,
             })).ToList();
             return new SuccessDataResult<List<UserListDto>>(data);
+        }
+
+        public async Task<IDataResult<User>> Update(UserUpdateDto userUpdateDto)
+        {
+             await _userDal.UserUpdate(userUpdateDto);
+            return new SuccessDataResult<User>(Messages.UserUpdated);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Application.Bussiness.Concrete
 
         public async Task<IResult> Add(Category category)
         {
-             _categoryDal.Add(category);
+            await _categoryDal.Add(category);
             return  new SuccessResult(Messages.CategoryAdded);
         }
 

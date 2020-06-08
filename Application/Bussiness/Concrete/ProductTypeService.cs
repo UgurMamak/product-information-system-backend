@@ -20,7 +20,7 @@ namespace Application.Bussiness.Concrete
         }
         public async Task<IResult> Add(ProductType productType)
         {
-            _productTypeDal.Add(productType);
+            await _productTypeDal.Add(productType);
             return new SuccessResult(Messages.ProductTypeAdded);
 
         }
