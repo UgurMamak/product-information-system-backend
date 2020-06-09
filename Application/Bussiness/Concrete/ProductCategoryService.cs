@@ -27,5 +27,11 @@ namespace Application.Bussiness.Concrete
             await _productCategoryDal.Add(entity);
             return new SuccessResult(Messages.CategoryAdded);
         }
+
+        public async Task<IResult> DeleteByProductId(string productId)
+        {
+           await _productCategoryDal.DeleteById(w => w.ProductId == productId);
+            return new SuccessResult(Messages.CommentDeleted);
+        }
     }
 }

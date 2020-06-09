@@ -10,5 +10,6 @@ namespace Application.Bussiness.Abstract
     public interface IProductImageService
     {
         Task<IResult> Add(List<string>images,string productId);
+        Task<IDataResult<IList<Image>>> GetByImageId(string productId);
     }
 }

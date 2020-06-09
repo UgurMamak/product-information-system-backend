@@ -1,5 +1,6 @@
 ﻿using Application.Core.Utilities.Results;
 using Application.Entities.Dtos.Comment;
+using Application.Entities.Dtos.CommetLike;
 using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,6 @@ namespace Application.Bussiness.Abstract
     {
         Task<IResult> Add(CommentCreateDto commentCreateDto);
         Task<IResult> Delete(CommentDeleteDto commentDeleteDto);
-        Task<IResult> Update(CommentUpdateDto commentUpdateDto);
+        Task<IResult> Update(CommentUpdateDto commentUpdateDto);   
     }
 }

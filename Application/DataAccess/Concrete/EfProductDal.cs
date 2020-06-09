@@ -6,9 +6,140 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System.Linq;
+using Application.Entities.Dtos.Product;
+using Application.Entities.Dtos.ProductCategory;
+using Application.Entities.Dtos.Comment;
+using System.IO;
+
 namespace Application.DataAccess.Concrete
 {
-    public class EfProductDal :EfEntityRepositoryBase<Product,ProductInformationContext>, IProductDal
+    public class EfProductDal : EfEntityRepositoryBase<Product, ProductInformationContext>, IProductDal
     {
+        public async Task PointAdd(ProductPoint productPoint)
+        {
+
+            using (var context = new ProductInformationContext())
+            {
+                var entity = context.ProductPoints.Add(productPoint);
+                await context.SaveChangesAsync();
+            }
+        }
+        public async Task<IList<ProductPoint>> ProductPointExists(Expression<Func<ProductPoint, bool>> filter = null)
+        {
+            using (var context = new ProductInformationContext())
+            {
+                var entity = await context.ProductPoints.Where(filter).ToListAsync();
+                return entity;
+            }
+        }
+
+        public async Task PointUpdate(ProductPoint productPoint)
+        {
+            using (var context = new ProductInformationContext())
+            {
+                var entity = await context.ProductPoints.SingleOrDefaultAsync(x => x.ProductId == productPoint.ProductId && x.UserId == productPoint.UserId);
+                entity.Point = productPoint.Point;
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IList<ProductCartDto>> GetProductCart(Expression<Func<ProductCartDto, bool>> filter = null)
+        {
+            using (var context = new ProductInformationContext())
+            {
+                if(filter==null)
+                {
+                    return await context.Products.Include(x => x.Images).Include(x => x.ProductCategories).Include(x => x.ProductType).Include(x => x.ProductCategories).ThenInclude(x => x.Category)
+                    .Select(se => new ProductCartDto
+                    {
+
+                        ProductId = se.Id,
+                        ProductName = se.ProductName,
+                        ProductType = se.ProductType.ProductTypeName,
+                        Created = se.Created,
+
+                        UserId = se.UserId,
+                        FirstName = se.User.FirstName,
+                        LastName = se.User.LastName,
+
+                        CommentNumber = se.Comments.Count(x => x.ProductId == se.Id),
+
+                        productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
+
+                        productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName }))
+                    })
+                    .ToListAsync();
+                }
+                return await context.Products.Include(x => x.Images).Include(x => x.ProductCategories).Include(x => x.ProductType).Include(x => x.ProductCategories).ThenInclude(x => x.Category)
+                    .Select(se => new ProductCartDto
+                    {
+
+                        ProductId = se.Id,
+                        ProductName = se.ProductName,
+                        ProductType = se.ProductType.ProductTypeName,
+                        Created = se.Created,
+
+                        UserId = se.UserId,
+                        FirstName = se.User.FirstName,
+                        LastName = se.User.LastName,
+
+                        CommentNumber = se.Comments.Count(x => x.ProductId == se.Id),
+
+                        productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
+
+                        productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName }))
+                    })
+                    .Where(filter).ToListAsync();
+             
+            }
+        }
+
+        public async Task<IList<ProductDetailDto>> GetProductDetail(Expression<Func<ProductDetailDto, bool>> filter = null)
+        {
+            using (var context = new ProductInformationContext())
+            {
+               
+                    return await context.Products.Include(x => x.Images).Include(x => x.ProductCategories).Include(x => x.ProductCategories)
+                  .Select(se => new ProductDetailDto
+                  {
+                      ProductId = se.Id,
+                      ProductName = se.ProductName,
+                      ProductType = se.ProductType.ProductTypeName,
+                      Created = se.Created,
+
+                      UserId = se.UserId,
+                      FirstName = se.User.FirstName,
+                      LastName = se.User.LastName,
+
+                      CommentNumber = se.Comments.Count(x => x.ProductId == se.Id),
+
+                      productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
+
+                      productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),
+
+                      CommentDtos = new List<CommentListDto>(context.Comments.Where(x => x.ProductId == se.Id).Select(se => new CommentListDto
+                      {
+                          Id = se.Id,
+                          Content = se.Content,
+                          UserId = se.UserId,
+                          FirstName = se.User.FirstName,
+                          LastName = se.User.LastName,
+                          ImageName = se.User.ImageName,
+                          created = Convert.ToDateTime(se.Created.ToShortTimeString()),
+                          ProductId = se.ProductId
+                      })),
+
+                      ProductPoint = se.ProductPoint.Where(x => x.ProductId == se.Id).Average(x => x.Point).ToString()
+                  }
+                  ).Where(filter).ToListAsync();
+                
+
+              
+              
+            }
+        }
     }
 }

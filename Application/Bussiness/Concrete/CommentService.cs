@@ -2,6 +2,7 @@
 using Application.Core.Utilities.Results;
 using Application.DataAccess.Abstract;
 using Application.Entities.Dtos.Comment;
+using Application.Entities.Dtos.CommetLike;
 using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Application.Bussiness.Concrete
             await _commentDal.Add(comment);
             return new SuccessResult(Messages.CommentAdded);
         }
-
+  
         public async Task<IResult> Delete(CommentDeleteDto commentDeleteDto)
         {
             var comment = new Comment
@@ -46,5 +47,6 @@ namespace Application.Bussiness.Concrete
             await _commentDal.CommentUpdate(commentUpdateDto);
             return new SuccessResult(Messages.CommentUpdated);
         }
+
     }
 }

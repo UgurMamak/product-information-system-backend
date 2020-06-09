@@ -85,11 +85,5 @@ namespace WebApi.Controllers
             }
             return BadRequest(update.Message);
         }
-
-
-
-
-
-
     }
 }

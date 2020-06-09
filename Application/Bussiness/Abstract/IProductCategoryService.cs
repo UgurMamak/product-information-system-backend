@@ -10,5 +10,6 @@ namespace Application.Bussiness.Abstract
     public interface IProductCategoryService
     {
        Task<IResult> Add(ProductCategoryCreateDto productCategoryCreateDto);
+        Task<IResult> DeleteByProductId(string postId);
     }
 }

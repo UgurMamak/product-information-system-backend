@@ -25,5 +25,10 @@ namespace Application.Bussiness.Concrete
             }
             return new SuccessResult(Messages.CategoryAdded);    
         }
+
+        public async Task<IDataResult<IList<Image>>> GetByImageId(string productId)
+        {   //ProductId ye göre image bilgilerini alma     
+            return new SuccessDataResult<IList<Image>>(await _productImageDal.GetList(x => x.ProductId == productId)); 
+        }
     }
 }

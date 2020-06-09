@@ -22,7 +22,8 @@ namespace Application.Entities.Entity
         public List<Comment> Comments { get; set; }
         public List<ProductCategory> ProductCategories { get; set; }
         public List<LikeProduct> LikeProducts { get; set; }
-
         public ProductType ProductType { get; set; }
+
+        public List<ProductPoint> ProductPoint { get; set; }
     }
 }

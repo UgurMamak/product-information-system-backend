@@ -17,7 +17,7 @@ namespace Application.Entities.Configurations
 
 
             builder.HasOne(x=>x.Product)
-                .WithMany()
+                .WithMany(x=>x.ProductPoint)
                 .HasForeignKey(x=>x.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 

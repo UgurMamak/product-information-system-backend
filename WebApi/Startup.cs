@@ -72,6 +72,9 @@ namespace WebApi
             services.AddScoped<IProductImageService, ProductImageService>();
             services.AddScoped<IProductImageDal, EfProductImageDal>();
 
+            services.AddScoped<ICommentLikeServive, CommentLikeService>();
+            services.AddScoped<ICommentLikeDal, EfCommentLikeDal>();
+
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenHelper, JwtHelper>();
 

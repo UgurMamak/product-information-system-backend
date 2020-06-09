@@ -9,11 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Application.Entities.Dtos.Comment;
 using System.Linq;
+using Application.Entities.Dtos.CommetLike;
+using System.Linq.Expressions;
 
 namespace Application.DataAccess.Concrete
 {
     public class EfCommentDal : EfEntityRepositoryBase<Comment, ProductInformationContext>, ICommentDal
-    {
+    {   
         public async Task CommentUpdate(CommentUpdateDto commentUpdateDto)
         {
             using (var context = new ProductInformationContext())
@@ -28,5 +30,9 @@ namespace Application.DataAccess.Concrete
                 }
             }
         }
+
+
+       
+        
     }
 }

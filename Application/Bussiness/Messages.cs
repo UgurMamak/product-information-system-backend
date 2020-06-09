@@ -21,6 +21,10 @@ namespace Application.Bussiness
         public static string ProductDeleted = "Post başarıyla silindi";
         public static string ProductUpdated = "Post başarıyla güncellendi";
 
+
+        public static string ProductPointAdded = "Puanınız eklenmiştir";
+      
+
         public static string CommentAdded = "Yorum başarıyla eklendi";
         public static string CommentDeleted = "Yorum başarıyla silindi";
         public static string CommentUpdated = "Yorum başarıyla güncellendi";
@@ -33,7 +37,8 @@ namespace Application.Bussiness
         public static string LikePostAdded = "Post Beğenildi.";
         public static string LikePostDeleted = "Beğeni Silindi.";
 
-
+        public static string CommentLikeAdded = "Yorum Beğenildi";
+        public static string CommentLikeDeleted = "Beğeni Kaldırıldı";
 
         public static string UserAlreadyExists = "Bu kullanıcı zaten mevcut";
         public static string UserRegistered = "Kullanıcı başarıyla kaydedildi";
