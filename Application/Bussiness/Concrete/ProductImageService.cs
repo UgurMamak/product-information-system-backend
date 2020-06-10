@@ -1,6 +1,7 @@
 ﻿using Application.Bussiness.Abstract;
 using Application.Core.Utilities.Results;
 using Application.DataAccess.Abstract;
+using Application.Entities.Dtos.ProductImage;
 using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,15 @@ namespace Application.Bussiness.Concrete
               await  _productImageDal.Add(new Image { ProductId=productId,ImageName=item});
             }
             return new SuccessResult(Messages.CategoryAdded);    
+        }
+
+        public async Task<IResult> Delete(ImageDeleteDto imageDeleteDto)
+        {
+            foreach (var item in imageDeleteDto.imageLists)
+            {
+                await _productImageDal.DeleteById(x => x.Id == item.Id);
+            }
+            return new SuccessResult(Messages.ImageAdded);
         }
 
         public async Task<IDataResult<IList<Image>>> GetByImageId(string productId)

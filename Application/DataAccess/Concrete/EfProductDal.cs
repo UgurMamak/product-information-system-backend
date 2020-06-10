@@ -14,6 +14,7 @@ using Application.Entities.Dtos.ProductCategory;
 using Application.Entities.Dtos.Comment;
 using System.IO;
 
+
 namespace Application.DataAccess.Concrete
 {
     public class EfProductDal : EfEntityRepositoryBase<Product, ProductInformationContext>, IProductDal
@@ -101,44 +102,60 @@ namespace Application.DataAccess.Concrete
         {
             using (var context = new ProductInformationContext())
             {
-               
-                    return await context.Products.Include(x => x.Images).Include(x => x.ProductCategories).Include(x => x.ProductCategories)
-                  .Select(se => new ProductDetailDto
-                  {
-                      ProductId = se.Id,
-                      ProductName = se.ProductName,
-                      ProductType = se.ProductType.ProductTypeName,
-                      Created = se.Created,
 
+                return await context.Products.Include(x => x.Images).Include(x => x.ProductCategories).Include(x => x.ProductCategories)
+              .Select(se => new ProductDetailDto
+              {
+                  ProductId = se.Id,
+                  ProductName = se.ProductName,
+                  ProductType = se.ProductType.ProductTypeName,
+                  Created = se.Created,
+                  Content = se.Content,
+                  UserId = se.UserId,
+                  FirstName = se.User.FirstName,
+                  LastName = se.User.LastName,
+
+                  CommentNumber = se.Comments.Count(x => x.ProductId == se.Id),
+
+                  productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
+
+                  productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),
+
+                  CommentDtos = new List<CommentListDto>(context.Comments.Where(x => x.ProductId == se.Id).Select(se => new CommentListDto
+                  {
+                      Id = se.Id,
+                      Content = se.Content,
                       UserId = se.UserId,
                       FirstName = se.User.FirstName,
                       LastName = se.User.LastName,
+                      ImageName = se.User.ImageName,
+                      created = Convert.ToDateTime(se.Created.ToShortTimeString()),
+                      ProductId = se.ProductId,
+                     status=se.CommentLikes.Where(w=>w.CommentId==se.Id).Count().ToString()
+                  })),
 
-                      CommentNumber = se.Comments.Count(x => x.ProductId == se.Id),
-
-                      productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
-
-                      productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),
-
-                      CommentDtos = new List<CommentListDto>(context.Comments.Where(x => x.ProductId == se.Id).Select(se => new CommentListDto
-                      {
-                          Id = se.Id,
-                          Content = se.Content,
-                          UserId = se.UserId,
-                          FirstName = se.User.FirstName,
-                          LastName = se.User.LastName,
-                          ImageName = se.User.ImageName,
-                          created = Convert.ToDateTime(se.Created.ToShortTimeString()),
-                          ProductId = se.ProductId
-                      })),
-
-                      ProductPoint = se.ProductPoint.Where(x => x.ProductId == se.Id).Average(x => x.Point).ToString()
-                  }
-                  ).Where(filter).ToListAsync();
+                  ProductPoint = se.ProductPoint.Where(x => x.ProductId == se.Id).Average(x => x.Point).ToString()
+              }
+              ).Where(filter).ToListAsync();
                 
 
               
               
+            }
+        }
+
+        public async Task ProductUpdate(ProductUpdateDto product)
+        {
+            using (var context=new ProductInformationContext())
+            {
+                var entity = await context.Products.SingleOrDefaultAsync(x=>x.Id==product.Id);
+
+                if (product.ProductName != null) entity.ProductName = product.ProductName;
+                if (product.Content != null) entity.Content = product.Content;
+                if (product.Title != null) entity.Title = product.Title;
+                if (product.ProductTypeId != null) entity.ProductTypeId = product.ProductTypeId;
+                entity.Updated = DateTime.Now;
+                await context.SaveChangesAsync();
             }
         }
     }

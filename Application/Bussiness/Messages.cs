@@ -21,6 +21,10 @@ namespace Application.Bussiness
         public static string ProductDeleted = "Post başarıyla silindi";
         public static string ProductUpdated = "Post başarıyla güncellendi";
 
+        public static string ImageDeleted = "resim silindi";
+        public static string ImageAdded = "resim eklendi";
+
+
 
         public static string ProductPointAdded = "Puanınız eklenmiştir";
       

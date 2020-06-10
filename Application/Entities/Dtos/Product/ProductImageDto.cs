@@ -9,6 +9,6 @@ namespace Application.Entities.Dtos.Product
     public class ProductImageDto : IDto
     {
         public IFormFile Image { get; set; }
-        public string ProductId { get; set; }
+        public string ImageName { get; set; }
     }
 }

@@ -86,7 +86,7 @@ namespace WebApi.Controllers
 
         
 
-        [HttpGet("getallproductcart")] //tüm postları listeleme +++
+        [HttpGet("getallproductcart")] //tüm ürünleri listeler
         public async Task<IActionResult> GetProductCart()
         {
             var result =await _productService.GetProductCart();
@@ -112,7 +112,7 @@ namespace WebApi.Controllers
 
      
 
-        [HttpGet("gettypecart")]//+++
+        [HttpGet("gettypecart")]//ürün tipine göre getirme
         public async Task<IActionResult> GetTypeProductCart([FromForm]FilterDtos filterDtos)
         {
             //Ürün tiplerine göre listeleme işlemi
@@ -162,6 +162,18 @@ namespace WebApi.Controllers
         }
 
 
+        [HttpPost("update")]//++++
+        public async Task<IActionResult> Update([FromForm] ProductUpdateDto product)
+        {
+            var update =await _productService.Update(product);
+            if(update.Success)
+            {
+                return Ok(update.Message);
+            }
+            return BadRequest();
+        }
+
+
         //----------------------------------------PRODUCTPOINT PROCESS---------------------------------
         [HttpPost("pointadd")]
         public async Task<IActionResult> PointAdd([FromForm] ProductPoint productPoint)
@@ -175,8 +187,8 @@ namespace WebApi.Controllers
                 {
                     return Ok(entity.Message);
                 }
-
             }
+
             else
             {
                 var entity = await _productService.PointUpdate(productPoint);

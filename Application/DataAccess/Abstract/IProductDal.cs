@@ -21,6 +21,7 @@ namespace Application.DataAccess.Abstract
 
         //ProductDetail
         Task<IList<ProductDetailDto>> GetProductDetail(Expression<Func<ProductDetailDto, bool>> filter = null);
+        Task ProductUpdate(ProductUpdateDto product);
 
     }
 }

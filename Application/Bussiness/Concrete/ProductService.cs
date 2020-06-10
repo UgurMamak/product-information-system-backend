@@ -65,8 +65,13 @@ namespace Application.Bussiness.Concrete
             return new SuccessDataResult<IList<ProductDetailDto>>(await _productDal.GetProductDetail(x=>x.ProductId==productId));
         }
 
-        //PRODUCTPOİNT PROCCESS
+        public async Task<IResult> Update(ProductUpdateDto product)
+        {
+            await _productDal.ProductUpdate(product);
+            return new SuccessResult(Messages.ProductUpdated);
+        }
 
+        //-----------------------------------------------PRODUCTPOİNT PROCCESS----------------------
         public async Task<IResult> PointAdd(ProductPoint productPoint)
         {
             await _productDal.PointAdd(productPoint);
@@ -94,6 +99,6 @@ namespace Application.Bussiness.Concrete
             return new SuccessResult("güncellendi");
         }
 
-       
+      
     }
 }

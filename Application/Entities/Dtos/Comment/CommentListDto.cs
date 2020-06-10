@@ -15,5 +15,8 @@ namespace Application.Entities.Dtos.Comment
         public string ImageName { get; set; }//yorumu yapan 
         public string ProductId { get; set; }
         public DateTime created { get; set; }
+
+        public string status { get; set; }//like dislike sayısı için 
+
     }
 }

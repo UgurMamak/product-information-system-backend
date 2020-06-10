@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         }
 
 
-        //COMMENTLİKE PROCESS
+        //------------------------------------------------------------COMMENTLİKE PROCESS
         [HttpPost("commentlike")]
         public async Task<IActionResult> CommentLike(CommentLikeCreateDto commentLikeCreateDto)
         {

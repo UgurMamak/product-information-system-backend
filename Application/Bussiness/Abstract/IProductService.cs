@@ -18,6 +18,8 @@ namespace Application.Bussiness.Abstract
 
         Task<IDataResult<IList<ProductDetailDto>>> GetProductDetail(string productId);
 
+        Task<IResult> Update(ProductUpdateDto product);
+
 
         //Puan verme kontolü
         Task<IResult>  PointAdd(ProductPoint productPoint);

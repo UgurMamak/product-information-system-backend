@@ -1,4 +1,5 @@
 ﻿using Application.Core.Utilities.Results;
+using Application.Entities.Dtos.ProductImage;
 using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace Application.Bussiness.Abstract
     {
         Task<IResult> Add(List<string>images,string productId);
         Task<IDataResult<IList<Image>>> GetByImageId(string productId);
+        Task<IResult> Delete(ImageDeleteDto imageDeleteDto);
     }
 }
