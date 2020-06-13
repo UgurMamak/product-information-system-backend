@@ -12,5 +12,7 @@ namespace Application.Bussiness.Abstract
         Task<IResult> Add(CommentLikeCreateDto commentLike);
         Task<string> LikeExists(CommentLikeCreateDto commentLike);  
         Task<IResult> Delete(CommentLikeCreateDto commentLike);
+
+        Task<IDataResult<CommentLikeDto>> GetCommentLike(string commentId);
     }
 }

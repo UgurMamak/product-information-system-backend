@@ -20,7 +20,7 @@ namespace Application.Bussiness.Concrete
         public async Task<IResult> Add(CommentLikeCreateDto commentLike)
         {
             await _commentLikeDal.Add(new CommentLike { CommentId=commentLike.CommentId,UserId=commentLike.userId,LikeStatus=commentLike.LikeStatus });
-            return new SuccessResult(commentLike.LikeStatus == true ? "Yorumu beğendiniz" : "Yorumu beğenmediniz");
+            return new SuccessResult (commentLike.LikeStatus == true ? "Yorumu beğendiniz" : "Yorumu beğenmediniz");
         }
 
         public async Task<IResult> Delete(CommentLikeCreateDto commentLike)
@@ -46,6 +46,12 @@ namespace Application.Bussiness.Concrete
             }
             //gelen data dbde varsa kaldırma işlemi yapılacak.
             return "2";
+        }
+
+        //CommentLike-----------------------
+        public async Task<IDataResult<CommentLikeDto>> GetCommentLike(string commentId)
+        {
+            return new SuccessDataResult<CommentLikeDto>(await _commentLikeDal.GetCommentLike(commentId));
         }
 
     }

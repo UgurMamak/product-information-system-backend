@@ -66,6 +66,8 @@ namespace WebApi.Controllers
                 var entity = await _commentLikeService.Add(commentLikeCreateDto);
                 if (entity.Success)
                 {
+                   // var result = await _commentLikeService.GetCommentLike(commentLikeCreateDto.CommentId);
+                   // result.Data.Message = entity.Message;
                     return Ok(entity.Message);
                 }
             }
@@ -77,6 +79,8 @@ namespace WebApi.Controllers
                     var entity = await _commentLikeService.Add(commentLikeCreateDto);
                     if (entity.Success)
                     {
+                       // var result = await _commentLikeService.GetCommentLike(commentLikeCreateDto.CommentId);
+                        //result.Data.Message = entity.Message;
                         return Ok(entity.Message);
                     }
                 }                          
@@ -91,6 +95,16 @@ namespace WebApi.Controllers
                 }
             }
             return BadRequest();        
+        }
+
+        [HttpGet("getcommentlike")]//+++
+        public async Task<IActionResult> GetProductPoint(string commentId)
+        {
+            var result = await _commentLikeService.GetCommentLike(commentId);
+            result.Data.Message = "";
+            if (result.Success)
+            { return Ok(result.Data); }
+            return BadRequest(result.Message);
         }
 
 

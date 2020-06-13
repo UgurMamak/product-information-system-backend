@@ -185,19 +185,33 @@ namespace WebApi.Controllers
                 var entity = await _productService.PointAdd(productPoint);
                 if (entity.Success)
                 {
-                    return Ok(entity.Message);
+                    var result = await _productService.GetProductPoint(productPoint.ProductId);
+                    result.Data.Message = "Puanınız eklendi";
+                    return Ok(result.Data);
                 }
             }
-
+             
             else
             {
                 var entity = await _productService.PointUpdate(productPoint);
                 if (entity.Success)
                 {
-                    return Ok(entity.Message);
+                    var result = await _productService.GetProductPoint(productPoint.ProductId);
+                    result.Data.Message = "Puanınız Güncellendi";
+                    return Ok(result.Data);
                 }
             }
             return BadRequest();
+        }
+
+        [HttpGet("getproductpoint")]//+++
+        public async Task<IActionResult> GetProductPoint(string productId)
+        {
+            var result =await _productService.GetProductPoint(productId);
+            result.Data.Message = "";
+            if (result.Success)
+            { return Ok(result.Data); }
+            return BadRequest(result.Message);
         }
 
     }

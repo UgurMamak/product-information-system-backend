@@ -13,6 +13,7 @@ namespace Application.Bussiness.Abstract
     {
         Task<IResult> Add(CommentCreateDto commentCreateDto);
         Task<IResult> Delete(CommentDeleteDto commentDeleteDto);
-        Task<IResult> Update(CommentUpdateDto commentUpdateDto);   
+        Task<IResult> Update(CommentUpdateDto commentUpdateDto);
+        
     }
 }

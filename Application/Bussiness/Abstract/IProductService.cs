@@ -25,6 +25,7 @@ namespace Application.Bussiness.Abstract
         Task<IResult>  PointAdd(ProductPoint productPoint);
         Task<bool> ProductPointExists(ProductPoint productPoint);
         Task<IResult> PointUpdate(ProductPoint productPoint);
+        Task<IDataResult<ProductPointDto>> GetProductPoint(string productId);
     }
 }
 

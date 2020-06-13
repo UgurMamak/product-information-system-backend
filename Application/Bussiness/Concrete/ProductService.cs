@@ -99,6 +99,11 @@ namespace Application.Bussiness.Concrete
             return new SuccessResult("güncellendi");
         }
 
-      
+        public async Task<IDataResult<ProductPointDto>> GetProductPoint(string productId)
+        {            
+            return new SuccessDataResult<ProductPointDto>(await _productDal.GetProductPoint(productId));
+        }
+
+
     }
 }

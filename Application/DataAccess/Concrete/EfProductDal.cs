@@ -46,6 +46,19 @@ namespace Application.DataAccess.Concrete
                 await context.SaveChangesAsync();
             }
         }
+        public async Task<ProductPointDto> GetProductPoint(string productId)
+        {
+            using (var context=new ProductInformationContext())
+            {
+                var isthere = await context.ProductPoints.Where(x=>x.ProductId==productId).ToListAsync();
+                if (isthere.Count == 0)
+                { var result2 = new ProductPointDto { Point = 0.0 }; return result2; }
+                var entity = await context.ProductPoints.Where(x=>x.ProductId==productId).AverageAsync(x=>x.Point);
+                var result = new ProductPointDto { Point=entity};
+
+                return result;
+            }          
+        }
 
         public async Task<IList<ProductCartDto>> GetProductCart(Expression<Func<ProductCartDto, bool>> filter = null)
         {
@@ -70,7 +83,10 @@ namespace Application.DataAccess.Concrete
 
                         productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
 
-                        productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName }))
+                        productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),
+                    
+                        ProductPoint = se.ProductPoint.Where(x => x.ProductId == se.Id).Average(x => x.Point).ToString()
+
                     })
                     .ToListAsync();
                 }
@@ -91,7 +107,10 @@ namespace Application.DataAccess.Concrete
 
                         productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
 
-                        productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName }))
+                        productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),
+
+
+                    ProductPoint = se.ProductPoint.Where(x => x.ProductId == se.Id).Average(x => x.Point).ToString()
                     })
                     .Where(filter).ToListAsync();
              
@@ -121,17 +140,21 @@ namespace Application.DataAccess.Concrete
 
                   productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),
 
-                  CommentDtos = new List<CommentListDto>(context.Comments.Where(x => x.ProductId == se.Id).Select(se => new CommentListDto
-                  {
+                  CommentDtos = new List<CommentListDto>(context.Comments.Where(x => x.ProductId == se.Id).OrderByDescending(x=>x.Created).Select(se => new CommentListDto
+                  { 
                       Id = se.Id,
                       Content = se.Content,
                       UserId = se.UserId,
                       FirstName = se.User.FirstName,
                       LastName = se.User.LastName,
                       ImageName = se.User.ImageName,
-                      created = Convert.ToDateTime(se.Created.ToShortTimeString()),
+                    //  created = Convert.ToDateTime(se.Created.ToShortTimeString()),
+                     // created = se.Created.ToString("MM/dd HH:mm"),
+                      created = se.Created.ToString("dd MMMM yyyy HH:mm"),
                       ProductId = se.ProductId,
-                     status=se.CommentLikes.Where(w=>w.CommentId==se.Id).Count().ToString()
+                     TrueNumber=se.CommentLikes.Where(w=>w.CommentId==se.Id && w.LikeStatus==true).Count().ToString(),
+                     FalseNumber=se.CommentLikes.Where(w=>w.CommentId==se.Id && w.LikeStatus==false).Count().ToString(),
+
                   })),
 
                   ProductPoint = se.ProductPoint.Where(x => x.ProductId == se.Id).Average(x => x.Point).ToString()

@@ -15,6 +15,7 @@ namespace Application.DataAccess.Abstract
         Task PointAdd(ProductPoint productPoint);
         Task<IList<ProductPoint>> ProductPointExists(Expression<Func<ProductPoint, bool>> filter = null);
         Task PointUpdate(ProductPoint productPoint);
+        Task<ProductPointDto> GetProductPoint(string productId);
 
         //ProductCart
         Task<IList<ProductCartDto>> GetProductCart(Expression<Func<ProductCartDto, bool>> filter = null);
