@@ -40,6 +40,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetList()
         {
             var entity = await _productTypeService.GetList();
+            
             if (entity.Success)
             {
                 return Ok(entity.Data);

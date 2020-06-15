@@ -27,7 +27,7 @@ namespace Application.Bussiness.Concrete
             {
                 ProductName = productCreateDto.ProductName,
                 ProductTypeId = productCreateDto.ProductTypeId,
-                Title = productCreateDto.Title,
+              //  Title = productCreateDto.Title,
                 Content = productCreateDto.Content,
                 UserId = productCreateDto.UserId,
                 Created = DateTime.Now

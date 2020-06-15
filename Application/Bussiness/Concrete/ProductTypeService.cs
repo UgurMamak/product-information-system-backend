@@ -30,7 +30,7 @@ namespace Application.Bussiness.Concrete
             var entity = await _productTypeDal.GetList();
             var data = new List<ProductTypeListDto>(
              entity.Select(se => new ProductTypeListDto { Id=se.Id, TypeName=se.ProductTypeName })
-             ).ToList();
+             ).OrderBy(x=>x.TypeName).ToList();
             return new SuccessDataResult<List<ProductTypeListDto>>(data);
         }
 

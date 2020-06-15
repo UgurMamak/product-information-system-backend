@@ -54,7 +54,7 @@ namespace WebApi.Controllers
                     var saveImage = await _productImageService.Add(images, entity.Data.Id);
                     if (saveImage.Success)
                     {
-                        return Ok(entity.Data);
+                        return Ok(entity.Message);
                     }
                     return BadRequest("Resimler yüklenirken hata oluştu");
                 }
@@ -112,11 +112,23 @@ namespace WebApi.Controllers
 
      
 
-        [HttpGet("gettypecart")]//ürün tipine göre getirme
+        [HttpPost("gettypecart")]//ürün tipine göre getirme
         public async Task<IActionResult> GetTypeProductCart([FromForm]FilterDtos filterDtos)
         {
             //Ürün tiplerine göre listeleme işlemi
             var result = await _productService.GetProductCart(p=>filterDtos.ProductType.Contains(p.ProductType));
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("getusercart")]//Usera göre cart getirme
+        public async Task<IActionResult> GetUserCart(string userId)
+        {
+            //Ürün tiplerine göre listeleme işlemi
+            var result = await _productService.GetProductCart(x=>userId.Contains(x.UserId)); 
             if (result.Success)
             {
                 return Ok(result.Data);

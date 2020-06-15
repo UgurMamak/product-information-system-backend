@@ -11,7 +11,8 @@ namespace Application.Entities.Dtos.Product
         public string ProductId { get; set; }//Product 
         public string ProductName { get; set; }//Product
         public string ProductType { get; set; }//Product
-        public DateTime Created { get; set; }//Product
+        //public DateTime Created { get; set; }//Product
+        public string Created { get; set; }//Product
         public string ProductPoint { get; set; }
         public string UserId { get; set; }//User
         public string FirstName { get; set; }//User 

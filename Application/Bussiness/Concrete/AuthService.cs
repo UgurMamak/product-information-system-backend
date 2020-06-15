@@ -2,10 +2,12 @@
 using Application.Core.Utilities.Results;
 using Application.Core.Utilities.Security.Hashing;
 using Application.Core.Utilities.Security.Jwt;
+using Application.Entities;
 using Application.Entities.Dtos.Auth;
 using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +56,14 @@ namespace Application.Bussiness.Concrete
             //bu çalışınca hash ve salt değerleri dönecek. bu operasyon dönünce yukarıda tanımlanan değerlerde değişecek.
             HashingHelper.CreatePasswordHash(RegisterDto.Password, out passwordHash, out passwordSalt);
 
+            int roleId;
+            using (var context = new ProductInformationContext())
+            {
+                roleId = (context.OperationClaims.SingleOrDefault(x => x.RoleName == RegisterDto.Role).Id);
+            }
+           
+
+
             var user = new User
             {
                 Email = RegisterDto.Email,
@@ -63,8 +73,9 @@ namespace Application.Bussiness.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true,
                 ImageName = imgName,
-                RoleId=Convert.ToInt32(RegisterDto.Role)
-            };
+                // RoleId = Convert.ToInt32(RegisterDto.Role)
+                RoleId =roleId
+                };
              await _userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
 

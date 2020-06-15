@@ -73,8 +73,8 @@ namespace Application.DataAccess.Concrete
                         ProductId = se.Id,
                         ProductName = se.ProductName,
                         ProductType = se.ProductType.ProductTypeName,
-                        Created = se.Created,
-
+                       // Created = se.Created,
+                        Created = se.Created.ToString("dd MMMM yyyy HH:mm"),
                         UserId = se.UserId,
                         FirstName = se.User.FirstName,
                         LastName = se.User.LastName,
@@ -97,8 +97,8 @@ namespace Application.DataAccess.Concrete
                         ProductId = se.Id,
                         ProductName = se.ProductName,
                         ProductType = se.ProductType.ProductTypeName,
-                        Created = se.Created,
-
+                        //Created = se.Created,
+                        Created = se.Created.ToString("dd MMMM yyyy HH:mm"),
                         UserId = se.UserId,
                         FirstName = se.User.FirstName,
                         LastName = se.User.LastName,
