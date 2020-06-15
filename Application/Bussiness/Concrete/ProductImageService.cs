@@ -27,11 +27,11 @@ namespace Application.Bussiness.Concrete
             return new SuccessResult(Messages.CategoryAdded);    
         }
 
-        public async Task<IResult> Delete(ImageDeleteDto imageDeleteDto)
+        public async Task<IResult> Delete(List<string> images)
         {
-            foreach (var item in imageDeleteDto.imageLists)
+            foreach (var item in images)
             {
-                await _productImageDal.DeleteById(x => x.Id == item.Id);
+                await _productImageDal.DeleteById(x => x.ImageName == item);
             }
             return new SuccessResult(Messages.ImageAdded);
         }

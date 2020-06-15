@@ -1,4 +1,5 @@
 ﻿using Application.Core.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,12 +9,16 @@ namespace Application.Entities.Dtos.Product
     public class ProductUpdateDto : IDto
     {
         public string Id { get; set; }//productId
-        public string Title { get; set; }
+        public string Title { get; set; } 
         public string Content { get; set; } 
         public string ProductName { get; set; }
         public string ProductTypeId { get; set; }
         public DateTime Updated { get; set; }
-        public List<ProductImageDto> ProductImages { get; set; } //Gelen resim bilgilerini güncellemek için
+
+        public string[] oldImageName { get; set; }
+        public IFormFile[] NewImages { get; set; }
+
+       // public List<ProductImageDto> ProductImages { get; set; } //Gelen resim bilgilerini güncellemek için
 
         // public string ImageName { get; set; }// eski image ismi
         //public IFormFile Image { get; set; } //yeni gelen  image

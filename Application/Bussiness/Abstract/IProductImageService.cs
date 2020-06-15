@@ -12,6 +12,6 @@ namespace Application.Bussiness.Abstract
     {
         Task<IResult> Add(List<string>images,string productId);
         Task<IDataResult<IList<Image>>> GetByImageId(string productId);
-        Task<IResult> Delete(ImageDeleteDto imageDeleteDto);
+        Task<IResult> Delete(List<string> images);
     }
 }

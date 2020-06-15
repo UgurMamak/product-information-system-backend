@@ -8,7 +8,7 @@ namespace Application.Entities.Dtos.ProductImage
 {
    public  class ImageDeleteDto:IDto
     {
-    
+        public string[] ImageNames { get; set; }
        public ImageList[] imageLists { get; set; }
     }
 

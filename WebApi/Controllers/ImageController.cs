@@ -28,6 +28,7 @@ namespace WebApi.Controllers
         [HttpPost("delete")]
         public async Task<IActionResult> Delete([FromForm] ImageDeleteDto imageDeleteDto)
         {
+            /*
           var entity= await _productImageService.Delete(imageDeleteDto);
             if(entity.Success)
             {
@@ -37,7 +38,7 @@ namespace WebApi.Controllers
                     System.IO.File.Delete(resimler + "\\" + item.ImageName);
                 }
                 return Ok(entity.Message);
-            }
+            }*/
             return BadRequest();
         }
 
