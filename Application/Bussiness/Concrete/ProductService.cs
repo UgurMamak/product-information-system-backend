@@ -6,6 +6,7 @@ using Application.Entities.Dtos.ProductCategory;
 using Application.Entities.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,18 @@ namespace Application.Bussiness.Concrete
 
         public async Task<IResult> Update(ProductUpdateDto product)
         {
+
+            if (product.Categories != null)
+            {
+                
+                foreach (var item in product.Categories)
+                {
+                    await _productCategoryService.Add(
+                         new ProductCategoryCreateDto { ProductId = product.Id, CategoryId = item }
+                         );
+                }
+            }
+
             await _productDal.ProductUpdate(product);
             return new SuccessResult(Messages.ProductUpdated);
         }

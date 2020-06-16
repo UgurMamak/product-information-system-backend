@@ -28,10 +28,20 @@ namespace Application.Bussiness.Concrete
             return new SuccessResult(Messages.CategoryAdded);
         }
 
-        public async Task<IResult> DeleteByProductId(string productId)
+        public async Task<IResult> DeleteByProductId(string productId)//ürüne ait tüm kayıtları silmek için
         {
            await _productCategoryDal.DeleteById(w => w.ProductId == productId);
             return new SuccessResult(Messages.CommentDeleted);
         }
+
+
+
+        public async Task<IResult> Delete(ProductCategory productCategory)//belli kayıtları silmek için
+        {        
+          await  _productCategoryDal.DeleteById(w => w.ProductId == productCategory.ProductId && w.CategoryId == productCategory.CategoryId);
+            return new SuccessResult(Messages.CategoryDeleted);
+        }
+
+
     }
 }

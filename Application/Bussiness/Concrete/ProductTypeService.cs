@@ -14,7 +14,7 @@ namespace Application.Bussiness.Concrete
     public class ProductTypeService : IProductTypeService
     {
         private IProductTypeDal _productTypeDal;
-        public ProductTypeService(IProductTypeDal productTypeDal)
+        public ProductTypeService(IProductTypeDal productTypeDal) 
         {
             _productTypeDal = productTypeDal;
         }
@@ -46,5 +46,14 @@ namespace Application.Bussiness.Concrete
             return new SuccessResult();
             
         }
+
+
+        public async Task<IResult> Delete(ProductType productType)
+        {
+            await _productTypeDal.Delete(productType);
+            return new SuccessResult(Messages.CategoryDeleted);
+        }
+
+
     }
 }

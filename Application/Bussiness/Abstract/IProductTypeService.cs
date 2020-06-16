@@ -15,5 +15,7 @@ namespace Application.Bussiness.Abstract
         Task<IResult> TypeExists(string typeName);
 
         Task<IDataResult<IList<ProductTypeListDto>>> GetList();
+
+        Task<IResult> Delete(ProductType productType);
     }
 }

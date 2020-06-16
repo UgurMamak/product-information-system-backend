@@ -47,7 +47,12 @@ namespace Application.Bussiness.Concrete
              ).ToList();
             return new SuccessDataResult<List<CategoryListDto>>(data);
         }
-        
+
+        public async Task<IResult> Delete(Category category)
+        {
+           await _categoryDal.Delete(category);
+            return new SuccessResult(Messages.CategoryDeleted);
+        }
 
     }
 }

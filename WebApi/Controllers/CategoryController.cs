@@ -48,5 +48,16 @@ namespace WebApi.Controllers
             return BadRequest();
         }
 
+        [HttpPost("delete")]
+        public async Task<IActionResult> Delete(Category category)
+        {
+            var entity = await _categoryService.Delete(category);
+            if(entity.Success)
+            {
+                return Ok(entity.Success);
+            }
+            return BadRequest();
+        }
+
     }
 }

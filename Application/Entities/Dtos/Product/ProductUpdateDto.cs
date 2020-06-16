@@ -14,6 +14,7 @@ namespace Application.Entities.Dtos.Product
         public string ProductName { get; set; }
         public string ProductTypeId { get; set; }
         public DateTime Updated { get; set; }
+        public string[] Categories { get; set; }
 
         public string[] oldImageName { get; set; }
         public IFormFile[] NewImages { get; set; }

@@ -15,5 +15,8 @@ namespace Application.Bussiness.Abstract
         Task<IResult> CategoryExists(string categoryName);
 
         Task<IDataResult<IList<CategoryListDto>>> GetList();
+
+        Task<IResult> Delete(Category category);
     }
 }
+ 
