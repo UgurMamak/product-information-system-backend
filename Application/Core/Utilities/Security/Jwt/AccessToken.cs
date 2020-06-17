@@ -11,5 +11,8 @@ namespace Application.Core.Utilities.Security.Jwt
         public DateTime Expiration { get; set; }
         public string UserId { get; set; }
         public List<OperationClaim> Role { get; set; }
+
+        public string Image { get; set; }
+
     }
 }

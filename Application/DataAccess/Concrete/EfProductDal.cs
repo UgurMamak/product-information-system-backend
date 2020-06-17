@@ -81,6 +81,9 @@ namespace Application.DataAccess.Concrete
 
                         CommentNumber = se.Comments.Count(x => x.ProductId == se.Id),
 
+                        //LikeNumber = context.LikePosts.Where(w => w.PostId == se.Id && w.LikeStatus == true).Count()
+                        LikeNumber=se.LikeProducts.Where(x=>x.ProductId==se.Id && x.LikeStatus==true).Count(),
+
                         productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
 
                         productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),

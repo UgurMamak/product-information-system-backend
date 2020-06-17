@@ -14,6 +14,7 @@ namespace Application.Entities.Dtos.Product
         //public DateTime Created { get; set; }//Product
         public string Created { get; set; }//Product
         public string ProductPoint { get; set; }
+        public int LikeNumber { get; set; }//postun like sayısnı göstermek için
         public string UserId { get; set; }//User
         public string FirstName { get; set; }//User 
         public string LastName { get; set; }//User

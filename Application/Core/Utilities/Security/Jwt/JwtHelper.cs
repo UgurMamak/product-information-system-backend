@@ -38,7 +38,9 @@ namespace Application.Core.Utilities.Security.Jwt
             {
                 Token = token,
                 Expiration = _accessTokenExpiration,
-                UserId = user.Id
+                UserId = user.Id, 
+                Image=user.ImageName
+                
             };      
         }
         //JWT oluşturmak için gerekli olan parametreleri verdim.
