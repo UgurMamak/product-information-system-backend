@@ -38,8 +38,8 @@ namespace Application.Bussiness
         public static string PasswordError = "Şifre Hatalı";
         public static string SuccessfulLogin = "Sisteme Giriş Başarılı";
 
-        public static string LikePostAdded = "Post Beğenildi.";
-        public static string LikePostDeleted = "Beğeni Silindi.";
+        public static string LikeProductAdded = "Post Beğenildi.";
+        public static string LikeProductDeleted = "Beğeni Silindi.";
 
         public static string CommentLikeAdded = "Yorum Beğenildi";
         public static string CommentLikeDeleted = "Beğeni Kaldırıldı";
