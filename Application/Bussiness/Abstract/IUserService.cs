@@ -17,7 +17,10 @@ namespace Application.Bussiness.Abstract
         Task<IDataResult<IList<UserListDto>>> GetById(string userId);
         Task<IDataResult<IList<UserGetAllDto>>> UserGetAll();
         Task<IDataResult<User>> Update(UserUpdateDto userUpdateDto);
-      
+
+        Task<IResult> UpdateRole(UserGetAllDto userGetAllDto);
+
+
 
     }
 }

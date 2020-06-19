@@ -1,9 +1,11 @@
 ﻿using Application.Bussiness.Abstract;
 using Application.Core.Utilities.Results;
 using Application.DataAccess.Abstract;
+using Application.Entities;
 using Application.Entities.Dtos.Auth;
 using Application.Entities.Dtos.User;
 using Application.Entities.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,5 +61,24 @@ namespace Application.Bussiness.Concrete
              await _userDal.UserUpdate(userUpdateDto);
             return new SuccessDataResult<User>(Messages.UserUpdated);
         }
+
+        //Adminin kullanıcıların rollerini değiştirmek isterse
+        public async Task<IResult> UpdateRole(UserGetAllDto userGetAllDto) 
+        {
+            using (var context = new ProductInformationContext())
+            {
+                var roleId =await context.OperationClaims.Where(w => w.RoleName == userGetAllDto.Role).Select(se => new { num = se.Id }).Take(1).FirstOrDefaultAsync();
+                int id = roleId.num;
+
+                var update =await context.Users.SingleOrDefaultAsync(w => w.Id == userGetAllDto.Id);
+
+
+
+                if (userGetAllDto.Id != null) update.RoleId = id;
+                context.SaveChanges();
+                return new SuccessResult("yetki güncellendi");
+            }
+        }
+
     }
 }

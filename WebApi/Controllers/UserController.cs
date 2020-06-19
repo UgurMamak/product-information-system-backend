@@ -45,7 +45,8 @@ namespace WebApi.Controllers
             var result = await _userService.UserGetAll();
             if (result.Success)
             {
-                return Ok(result.Data);
+                var data = result.Data.Where(x=>x.Role!= "SystemAdmin");
+                return Ok(data);
             }
             return BadRequest(result.Message);
         }
@@ -85,5 +86,18 @@ namespace WebApi.Controllers
             }
             return BadRequest(update.Message);
         }
+
+
+        [HttpPost("userRoleupdate")]
+        public async  Task<IActionResult> UserRoleUpdate([FromForm]UserGetAllDto userGetAllDto)
+        {
+            var entity =await _userService.UpdateRole(userGetAllDto);
+            if (entity.Success)
+            {
+                return Ok(entity.Message);
+            }
+            return BadRequest();
+        }
+
     }
 }
