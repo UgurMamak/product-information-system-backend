@@ -124,7 +124,6 @@ namespace Application.DataAccess.Concrete
         {
             using (var context = new ProductInformationContext())
             {
-
                 return await context.Products.Include(x => x.Images).Include(x => x.ProductCategories).Include(x => x.ProductCategories)
               .Select(se => new ProductDetailDto
               {
@@ -136,13 +135,9 @@ namespace Application.DataAccess.Concrete
                   UserId = se.UserId,
                   FirstName = se.User.FirstName,
                   LastName = se.User.LastName,
-
                   CommentNumber = se.Comments.Count(x => x.ProductId == se.Id),
-
                   productCategoryDtos = new List<ProductCategoryDto>(context.ProductCategories.Where(x => x.ProductId == se.Id).Select(se => new ProductCategoryDto { CategoryId = se.CategoryId, CategoryName = se.Category.CategoryName })),
-
                   productImageListDtos = new List<ProductImageListDto>(context.Images.Where(x => x.ProductId == se.Id).Select(se => new ProductImageListDto { Id = se.Id, ImageName = se.ImageName })),
-
                   CommentDtos = new List<CommentListDto>(context.Comments.Where(x => x.ProductId == se.Id).OrderByDescending(x=>x.Created).Select(se => new CommentListDto
                   { 
                       Id = se.Id,
@@ -162,11 +157,7 @@ namespace Application.DataAccess.Concrete
 
                   ProductPoint = se.ProductPoint.Where(x => x.ProductId == se.Id).Average(x => x.Point).ToString()
               }
-              ).Where(filter).ToListAsync();
-                
-
-              
-              
+              ).Where(filter).ToListAsync();                                        
             }
         }
 
